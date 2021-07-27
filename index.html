@@ -1,0 +1,77 @@
+
+<html>
+
+    <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+      <title>小黑记事本</title>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+      <meta name="robots" content="noindex, nofollow" />
+      <meta name="googlebot" content="noindex, nofollow" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="./index.css">
+    </head>
+    
+    <body>
+      <!-- 主体区域 -->
+      <section id="todoapp">
+        <!-- 输入框 -->
+        <header class="header">
+          <h1>小黑记事本</h1>
+          <input autofocus autocomplete="off" placeholder="请输入" class="new-todo" @keydown.enter="addList" v-model="inputValue">
+        </header>
+        <!-- 列表区域 -->
+        <section class="main">
+          <ul class="todo-list">
+            <li class="todo" v-for="(item,i) in list" :key="i">
+              <div class="view">
+                <span class="index">{{i+1}}
+                </span>
+                <label>{{item}}</label>
+                <button class="destroy" @click="remove(i)"></button>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <!-- 统计和清空 -->
+        <footer class="footer" v-show="this.list.length==0?false:true">
+         <span class="todo-count">
+           <strong v-text="this.list.length"></strong> items left
+         </span>
+         <button class="clear-completed" @click="clear">Clear</button>
+        </footer>
+      </section>
+      <!-- 底部 -->
+      <footer class="info">
+      </footer>
+      <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script>
+        var app = new Vue({
+          el: "#todoapp",
+          data(){
+              return {
+                // 记录记事的数据
+                 list:["吃饭",'睡觉','学习'],
+                // 输入框双向绑定的数据
+                  inputValue:'开黑'
+              }
+          },
+          methods:{
+            // 新增记事
+           addList(){
+            this.list.push(this.inputValue)
+           },
+          //  删除记事
+          remove(i){
+            this.list.splice(i,1)
+          },
+          // 清空
+          clear(){
+            this.list=[]
+          }
+          }
+        })
+      </script>
+    </body>
+    
+    </html>
